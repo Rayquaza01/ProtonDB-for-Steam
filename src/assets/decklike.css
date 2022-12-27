@@ -1,0 +1,20 @@
+/* based on https://store.akamai.steamstatic.com/public/css/applications/store/deckverified.css?contenthash=43d080104b63cb1bcddd */
+:root{--basicui-header-height: 0px}
+.protondb_BannerContainer{padding:12px 0px}
+.protondb_BannerHeader{text-transform:uppercase;font-size:12px;padding-bottom:5px;color:#fff;font-weight:700;letter-spacing:.5}
+.protondb_BannerContent{display:flex;flex-direction:row;padding:10px;justify-content:space-between;background-color:#3b5a7280 !important;align-items:center;transition:background-color .2s ease;flex-wrap:wrap;gap:8px}
+@media screen and (min-width: 1280px){.protondb_BannerContent{padding:16px 24px}}
+.protondb_BannerContent:focus-within{background-color:#678BA670}
+.protondb_BannerContent .protondb_LearnMore{font-size:14px}
+.protondb_CompatibilityDetailRatingDescription{vertical-align:middle;font-size:14px}
+.protondb_DescCont{display: flex; align-items: center;}
+.protondb_Checkmark{width: 20px; height: 20px; padding-right: 8px;}
+.protondb_LearnMore{font-size:16px}
+.protondb_LearnMore{padding:6px 12px;color:#fff;background-color:#1a9fff;border-radius:2px;box-shadow:0px 3px 6px 0px rgba(0,0,0,.32);transition:all .1s ease;display:flex}
+.protondb_LearnMore:hover{color:#fff;background-color:#0bf;cursor:pointer}
+.protondb_LearnMore.gpfocus{background-color:#fff;border-radius:0px;color:#000}
+
+.protondb_app_icon {
+    width: 20px;
+    height: 20px;
+ }
