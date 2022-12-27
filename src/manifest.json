@@ -7,8 +7,7 @@
   "description": "Shows ratings from protondb.com on Steam",
 
   "permissions" : [
-      "https://www.protondb.com/*",
-      "storage"
+      "https://www.protondb.com/*"
   ],
 
   "icons": {
@@ -19,24 +18,44 @@
   "content_scripts": [
     {
       "matches": ["https://store.steampowered.com/app/*"],
-      "js": ["js/protondb.js", "js/whitelist.js", "js/gamePage.js"],
-      "css": ["assets/protondb.css"]
+      "js": ["js/browser-polyfill.js", "js/protondb.js", "js/whitelist.js", "js/gamePage.js"],
+      "css": ["assets/decklike.css"]
     },
     {
       "matches": ["https://store.steampowered.com/wishlist/*"],
-      "js": ["js/protondb.js", "js/whitelist.js", "js/wishlist.js"],
-      "css": ["assets/protondb.css"]
+      "js": ["js/browser-polyfill.js", "js/protondb.js", "js/whitelist.js", "js/wishlist.js"],
+      "css": ["assets/decklike.css"]
+    },
+    {
+      "matches": ["https://store.steampowered.com/search/*"],
+      "js": ["js/browser-polyfill.js", "js/protondb.js", "js/whitelist.js", "js/search.js"],
+      "css": ["assets/decklike.css"]
     }
   ],
 
+  "web_accessible_resources": [
+    "assets/platinum.svg",
+    "assets/gold.svg",
+    "assets/silver.svg",
+    "assets/bronze.svg",
+    "assets/borked.svg",
+    "assets/native.svg",
+    "assets/wine_platinum.svg",
+    "assets/wine_gold.svg",
+    "assets/wine_silver.svg",
+    "assets/wine_bronze.svg",
+    "assets/wine_borked.svg",
+    "assets/pending.svg",
+    "assets/pending-search.svg"
+  ],
+
   "background": {
-    "scripts": ["js/background.js"],
-    "persistent": false
+    "scripts": ["js/browser-polyfill.js", "js/background.js"]
   },
 
   "applications": {
       "gecko": {
-          "id": "{30280527-c46c-4e03-bb16-2e3ed94fa57c}"
+          "id": "protondb-steam@r01"
       }
   }
 
