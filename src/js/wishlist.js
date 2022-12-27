@@ -1,77 +1,64 @@
-console.log('wishlist.js');
+console.log("wishlist.js");
 
 class Wishlist {
-    static create_rating(rating, app_id, isWhitelisted, isNative) {
-        const ratingLink = document.createElement('a');
-        ratingLink.classList.add('protondb_rating_link');
-        ratingLink.style.verticalAlign = 'middle';
-        
-        if (isNative) {
-            ratingLink.classList.add('protondb_rating_native');
-            ratingLink.textContent = "Native";
-        } else if (rating !== 'pending') {
-            ratingLink.classList.add('protondb_rating_' + rating);
-            ratingLink.textContent = rating;
-        } else {
-            ratingLink.textContent = 'Awaiting Reports!';
-        }
-
-        ratingLink.href = ProtonDB.HOMEPAGE + "app/" + app_id;
-        ratingLink.target = '_blank';
-    
+    /**
+     * Creates the icon to add to the wishlist
+     * @param {string} rating
+     * @param {string} app_id
+     * @param {boolean} isWhitelisted
+     * @returns
+     */
+    static create_rating(rating, app_id, isWhitelisted) {
+        const link = document.createElement("a");
+        link.href = "https://protondb.com/app/" + app_id;
+        link.title = rating.charAt(0).toUpperCase() + rating.slice(1);
         if (isWhitelisted) {
-            const star = document.createElement('span');
-            star.classList.add('protondb_rating_whitelisted');
-            star.title = 'Whitelisted by Valve';
-            star.textContent = ' ★';
-    
-            ratingLink.appendChild(star);
+            link.title = link.title + " (Whitelisted by Valve)";
         }
-    
-        return ratingLink;
+        link.setAttribute("target", "_blank");
+
+        const img = document.createElement("img");
+        img.src = browser.runtime.getURL("assets/wine_" + rating+ ".svg");
+        if (rating === "pending") {
+            img.src = browser.runtime.getURL("assets/pending.svg");
+        }
+        img.className = "protondb_app_icon";
+        link.appendChild(img);
+
+        return link;
     }
-    
+
     static load_ratings() {
-        const rows = document.getElementById('wishlist_ctn');
-        for (const row of rows.getElementsByClassName('wishlist_row')) {
-            const app_id = row.getAttribute('data-app-id');
-            const stats_container = row.querySelector('.stats');
-    
+        const rows = document.getElementById("wishlist_ctn");
+        for (const row of rows.getElementsByClassName("wishlist_row")) {
+            const app_id = row.getAttribute("data-app-id");
+            const icon_container = row.querySelector(".platform_icons");
+
             // If a protondb rating has already been loaded, skip to the next wishlist item.
-            if (stats_container.querySelector('.protondb_rating_link')) {
+            if (icon_container.querySelector(".protondb_app_icon") || row.querySelector(".platform_img.linux") !== null) {
                 continue;
             }
 
             ProtonDB.request_rating(app_id, rating => {
-                console.log('Processing rating for ' + app_id + ' (' + rating + ')');
+                console.log("Processing rating for " + app_id + " (" + rating + ")");
                 const isWhitelisted = whitelist.includes(app_id);
 
-                const isNative = row.querySelector('.platform_img.linux') !== null;
-                const rating_container = Wishlist.create_rating(rating, app_id, isWhitelisted, isNative);
-                
-                const rating_field_label = document.createElement('div');
-                rating_field_label.classList.add('label');
-                rating_field_label.textContent = 'ProtonDB Rating:';
+                const rating_container = Wishlist.create_rating(rating, app_id, isWhitelisted);
 
-                const rating_field_value = document.createElement('div');
-                rating_field_value.classList.add('value');
-                rating_field_value.append(rating_container);
-
-                stats_container.append(rating_field_label);
-                stats_container.append(rating_field_value);
+                icon_container.appendChild(rating_container);
             });
         }
-    
+
         setTimeout(Wishlist.load_ratings, 1000);
     }
 }
 
 
-if (document.readyState === 'complete') {
+if (document.readyState === "complete") {
     Wishlist.load_ratings();
 } else {
-    document.addEventListener('readystatechange', _ => {
-        if (document.readyState === 'complete') {
+    document.addEventListener("readystatechange", _ => {
+        if (document.readyState === "complete") {
             Wishlist.load_ratings();
         }
     });
