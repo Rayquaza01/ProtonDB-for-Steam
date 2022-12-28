@@ -1,3 +1,5 @@
+console.log("Game Page");
+
 class Steam {
     /**
      * Returns a games appid from the url
@@ -36,10 +38,27 @@ class Steam {
         descCont.className = "protondb_DescCont";
         bannerContent.appendChild(descCont);
 
-        const img = document.createElement("img");
-        img.className = "protondb_Checkmark";
-        img.src = browser.runtime.getURL("assets/" + rating + ".svg");
-        descCont.appendChild(img)
+        let img;
+        // const img = document.createElement("img");
+        // img.className = "protondb_Checkmark";
+        // img.src = browser.runtime.getURL("assets/" + rating + ".svg");
+        // descCont.appendChild(img)
+        switch (rating) {
+            case "native":
+            case "platinum":
+            case "gold":
+            case "silver":
+            case "bronze":
+                img = injectSVG("checkmark");
+                break;
+            case "pending":
+            case "borked":
+                img = injectSVG(rating);
+                break;
+        }
+        img.classList.add("protondb_" + rating);
+        img.classList.add("protondb_rating_icon");
+        descCont.appendChild(img);
 
         const ratingDesc = document.createElement("span");
         ratingDesc.className = "protondb_CompatibilityDetailRatingDescription";

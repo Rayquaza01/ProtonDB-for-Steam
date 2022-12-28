@@ -1,11 +1,20 @@
 /* based on https://store.akamai.steamstatic.com/public/css/applications/store/deckverified.css?contenthash=43d080104b63cb1bcddd */
-:root{--basicui-header-height: 0px}
+:root{
+    --native: #59bf40;
+    --platinum: #4bc7dc;
+    --gold: #cfb53b;
+    --silver: #a5a5a5;
+    --bronze: #cd7f32;
+    --borked: #ff0000;
+    --pending: #ffffff;
+    --search: #5c636c;
+}
 .protondb_BannerContainer{padding:12px 0px}
 .protondb_BannerHeader{text-transform:uppercase;font-size:12px;padding-bottom:5px;color:#fff;font-weight:700;letter-spacing:.5}
 .protondb_BannerContent{display:flex;flex-direction:row;padding:10px;justify-content:space-between;background-color:#3b5a7280 !important;align-items:center;transition:background-color .2s ease;flex-wrap:wrap;gap:8px}
 @media screen and (min-width: 1280px){.protondb_BannerContent{padding:16px 24px}}
 .protondb_BannerContent:focus-within{background-color:#678BA670}
-.protondb_BannerContent .protondb_LearnMore{font-size:14px}
+.protondb_BannerContent {font-size:14px}
 .protondb_CompatibilityDetailRatingDescription{vertical-align:middle;font-size:14px}
 .protondb_DescCont{display: flex; align-items: center;}
 .protondb_Checkmark{width: 20px; height: 20px; padding-right: 8px;}
@@ -14,7 +23,46 @@
 .protondb_LearnMore:hover{color:#fff;background-color:#0bf;cursor:pointer}
 .protondb_LearnMore.gpfocus{background-color:#fff;border-radius:0px;color:#000}
 
-.protondb_app_icon {
-    width: 20px;
-    height: 20px;
- }
+.protondb_icon {
+    width: 24px;
+    height: 24px;
+}
+
+.protondb_rating_icon {
+    width: 18px;
+    height: 18px;
+    padding-right: 8px;
+}
+
+
+svg.protondb_native path {
+    fill: var(--native);
+}
+
+svg.protondb_platinum path {
+    fill: var(--platinum);
+}
+
+svg.protondb_gold path {
+    fill: var(--gold);
+}
+
+svg.protondb_silver path {
+    fill: var(--silver);
+}
+
+svg.protondb_bronze path {
+    fill: var(--bronze);
+}
+
+svg.protondb_borked path {
+    fill: var(--borked);
+}
+
+svg.protondb_pending path {
+    fill: var(--pending);
+}
+
+svg.protondb_search path {
+    fill: var(--search);
+}
