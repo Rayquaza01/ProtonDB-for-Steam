@@ -4,12 +4,8 @@ class ProtonDB {
     static get HOMEPAGE() {return "https://www.protondb.com/";}
     static get API_SUMMARY() {return "api/v1/reports/summaries/";}
 
-    static request_rating(appid, callback)
-    {
-        chrome.runtime.sendMessage(
-            {contentScriptQuery: "queryRating", appid: appid},
-            rating => callback(rating)
-        );
+    static request_rating(appid, callback) {
+        return browser.runtime.sendMessage({contentScriptQuery: "queryRating", appid: appid});
     }
 
     static get_rating_container(rating, whitelisted = false) {

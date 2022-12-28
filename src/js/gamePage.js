@@ -25,7 +25,7 @@ class Steam {
 var appid = Steam.get_app_id(window.location.href);
 
 if (document.querySelector("span.platform_img.linux") === null) {
-    ProtonDB.request_rating(appid, (rating) => {
+    ProtonDB.request_rating(appid).then(rating => {
         if (rating == "pending") {
             Steam.insert_rating("Awaiting reports!");
         } else {
