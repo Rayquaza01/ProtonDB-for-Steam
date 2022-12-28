@@ -18,7 +18,6 @@ class Search {
         link.setAttribute("target", "_blank");
 
         let img;
-        console.log("preimg")
         if (rating === "pending") {
             img = injectSVG("pending");
             img.classList.add("protondb_search");
@@ -26,14 +25,13 @@ class Search {
             img = injectSVG("wine");
             img.classList.add("protondb_" + rating);
         }
-        console.log(img);
         img.classList.add("protondb_icon");
         link.appendChild(img);
 
         return link;
     }
 
-    static load_ratings() {
+    static async load_ratings() {
         const rows = document.getElementById("search_resultsRows");
         for (const row of rows.getElementsByClassName("search_result_row")) {
             const app_id = row.dataset.dsAppid;
@@ -44,27 +42,33 @@ class Search {
                 continue;
             }
 
-            ProtonDB.request_rating(app_id, rating => {
-                console.log("Processing rating for " + app_id + " (" + rating + ")");
-                const isWhitelisted = whitelist.includes(app_id);
+            const rating = await ProtonDB.request_rating(app_id);
+            console.log("Processing rating for " + app_id + " (" + rating + ")");
+            const isWhitelisted = whitelist.includes(app_id);
 
-                const rating_container = Search.create_rating(rating, app_id, isWhitelisted);
+            const rating_container = Search.create_rating(rating, app_id, isWhitelisted);
 
-                icon_container.appendChild(rating_container);
-            });
+            icon_container.appendChild(rating_container);
         }
 
         setTimeout(Search.load_ratings, 1000);
     }
 }
 
+async function main() {
+    const opts = new Options(await browser.storage.sync.get());
+    if (!opts.search) return;
+    console.log(opts);
 
-if (document.readyState === "complete") {
-    Search.load_ratings();
-} else {
-    document.addEventListener("readystatechange", _ => {
-        if (document.readyState === "complete") {
-            Search.load_ratings();
-        }
-    });
+    if (document.readyState === "complete") {
+        Search.load_ratings();
+    } else {
+        document.addEventListener("readystatechange", _ => {
+            if (document.readyState === "complete") {
+                Search.load_ratings();
+            }
+        });
+    }
 }
+
+main();

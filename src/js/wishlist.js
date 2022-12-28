@@ -30,7 +30,7 @@ class Wishlist {
         return link;
     }
 
-    static load_ratings() {
+    static async load_ratings() {
         const rows = document.getElementById("wishlist_ctn");
         for (const row of rows.getElementsByClassName("wishlist_row")) {
             const app_id = row.getAttribute("data-app-id");
@@ -41,14 +41,13 @@ class Wishlist {
                 continue;
             }
 
-            ProtonDB.request_rating(app_id, rating => {
-                console.log("Processing rating for " + app_id + " (" + rating + ")");
-                const isWhitelisted = whitelist.includes(app_id);
+            const rating = await ProtonDB.request_rating(app_id);
+            console.log("Processing rating for " + app_id + " (" + rating + ")");
+            const isWhitelisted = whitelist.includes(app_id);
 
-                const rating_container = Wishlist.create_rating(rating, app_id, isWhitelisted);
+            const rating_container = Wishlist.create_rating(rating, app_id, isWhitelisted);
 
-                icon_container.appendChild(rating_container);
-            });
+            icon_container.appendChild(rating_container);
         }
 
         setTimeout(Wishlist.load_ratings, 1000);
@@ -56,12 +55,19 @@ class Wishlist {
 }
 
 
-if (document.readyState === "complete") {
-    Wishlist.load_ratings();
-} else {
-    document.addEventListener("readystatechange", _ => {
-        if (document.readyState === "complete") {
-            Wishlist.load_ratings();
-        }
-    });
+async function main() {
+    const opts = new Options(await browser.storage.sync.get());
+    if (!opts.wishlist) return;
+
+    if (document.readyState === "complete") {
+        Wishlist.load_ratings();
+    } else {
+        document.addEventListener("readystatechange", _ => {
+            if (document.readyState === "complete") {
+                Wishlist.load_ratings();
+            }
+        });
+    }
 }
+
+main();

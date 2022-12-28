@@ -1,5 +1,7 @@
 console.log("Game Page");
 
+let appid;
+
 class Steam {
     /**
      * Returns a games appid from the url
@@ -39,10 +41,6 @@ class Steam {
         bannerContent.appendChild(descCont);
 
         let img;
-        // const img = document.createElement("img");
-        // img.className = "protondb_Checkmark";
-        // img.src = browser.runtime.getURL("assets/" + rating + ".svg");
-        // descCont.appendChild(img)
         switch (rating) {
             case "native":
             case "platinum":
@@ -90,13 +88,21 @@ class Steam {
     }
 }
 
-// Main
-var appid = Steam.get_app_id(window.location.href);
+async function main() {
+    const opts = new Options(await browser.storage.sync.get());
+    console.log(opts);
+    if (!opts.storepage) return;
 
-if (document.querySelector("span.platform_img.linux") === null) {
-    ProtonDB.request_rating(appid, (rating) => {
+    appid = Steam.get_app_id(window.location.href);
+
+    if (document.querySelector("span.platform_img.linux") === null) {
+        const rating = await ProtonDB.request_rating(appid);
+        console.log(rating);
         Steam.insert_rating(rating, whitelist.includes(appid));
-    });
-} else {
-    Steam.insert_rating("native");
+    } else {
+        Steam.insert_rating("native");
+    }
 }
+
+// Main
+main();

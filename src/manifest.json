@@ -19,17 +19,17 @@
   "content_scripts": [
     {
       "matches": ["https://store.steampowered.com/app/*"],
-      "js": ["js/browser-polyfill.min.js", "js/svg.js", "js/protondb.js", "js/whitelist.js", "js/gamePage.js"],
+      "js": ["js/browser-polyfill.min.js", "js/Options.js", "js/svg.js", "js/protondb.js", "js/whitelist.js", "js/gamePage.js"],
       "css": ["assets/decklike.css"]
     },
     {
       "matches": ["https://store.steampowered.com/wishlist/*"],
-      "js": ["js/browser-polyfill.min.js", "js/svg.js", "js/protondb.js", "js/whitelist.js", "js/wishlist.js"],
+      "js": ["js/browser-polyfill.min.js", "js/Options.js", "js/svg.js", "js/protondb.js", "js/whitelist.js", "js/wishlist.js"],
       "css": ["assets/decklike.css"]
     },
     {
       "matches": ["https://store.steampowered.com/search/*"],
-      "js": ["js/browser-polyfill.min.js", "js/svg.js", "js/protondb.js", "js/whitelist.js", "js/search.js"],
+      "js": ["js/browser-polyfill.min.js", "js/Options.js", "js/svg.js", "js/protondb.js", "js/whitelist.js", "js/search.js"],
       "css": ["assets/decklike.css"]
     }
   ],
