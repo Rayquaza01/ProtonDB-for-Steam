@@ -34,32 +34,16 @@
     }
   ],
 
-  "web_accessible_resources": [
-    "assets/platinum.svg",
-    "assets/gold.svg",
-    "assets/silver.svg",
-    "assets/bronze.svg",
-    "assets/borked.svg",
-    "assets/native.svg",
-    "assets/wine_platinum.svg",
-    "assets/wine_gold.svg",
-    "assets/wine_silver.svg",
-    "assets/wine_bronze.svg",
-    "assets/wine_borked.svg",
-    "assets/pending.svg",
-    "assets/pending-search.svg"
-  ],
-
   "options_ui": {
     "page": "options.html",
     "browser_style": true
   },
 
   "background": {
-    "scripts": ["js/browser-polyfill.js", "js/background.js"]
+    "scripts": ["js/browser-polyfill.min.js", "js/background.js"]
   },
 
-  "applications": {
+  "browser_specific_settings": {
       "gecko": {
           "id": "protondb-steam@r01"
       }
