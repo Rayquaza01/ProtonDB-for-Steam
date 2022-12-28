@@ -1,4 +1,4 @@
-console.log("wishlist.js");
+console.log("search.js");
 
 class Search {
     /**
@@ -17,12 +17,17 @@ class Search {
         }
         link.setAttribute("target", "_blank");
 
-        const img = document.createElement("img");
-        img.src = browser.runtime.getURL("assets/wine_" + rating+ ".svg");
+        let img;
+        console.log("preimg")
         if (rating === "pending") {
-            img.src = browser.runtime.getURL("assets/pending-search.svg");
+            img = injectSVG("pending");
+            img.classList.add("protondb_search");
+        } else {
+            img = injectSVG("wine");
+            img.classList.add("protondb_" + rating);
         }
-        img.className = "protondb_app_icon";
+        console.log(img);
+        img.classList.add("protondb_icon");
         link.appendChild(img);
 
         return link;
@@ -35,7 +40,7 @@ class Search {
             const icon_container = row.querySelector(".search_name > div");
 
             // If a protondb rating has already been loaded, skip to the next wishlist item.
-            if (icon_container.querySelector(".protondb_app_icon") || row.querySelector(".platform_img.linux") !== null) {
+            if (icon_container.querySelector(".protondb_icon") || row.querySelector(".platform_img.linux") !== null) {
                 continue;
             }
 

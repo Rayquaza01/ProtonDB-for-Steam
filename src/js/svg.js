@@ -12,7 +12,5 @@ const Icons = {
  * @param {string} svg
  */
 function injectSVG(svg) {
-    let a = DOM_PARSER.parseFromString(Icons[svg], "image/svg+xml");
-    console.log(a.documentElement);
-    return a.documentElement;
+    return DOM_PARSER.parseFromString(Icons[svg], "image/svg+xml").documentElement;
 }

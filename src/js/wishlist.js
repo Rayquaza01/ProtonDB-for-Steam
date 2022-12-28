@@ -17,12 +17,14 @@ class Wishlist {
         }
         link.setAttribute("target", "_blank");
 
-        const img = document.createElement("img");
-        img.src = browser.runtime.getURL("assets/wine_" + rating+ ".svg");
+        let img;
         if (rating === "pending") {
-            img.src = browser.runtime.getURL("assets/pending.svg");
+            img = injectSVG("pending");
+        } else {
+            img = injectSVG("wine");
         }
-        img.className = "protondb_app_icon";
+        img.classList.add("protondb_" + rating);
+        img.classList.add("protondb_icon");
         link.appendChild(img);
 
         return link;
@@ -35,7 +37,7 @@ class Wishlist {
             const icon_container = row.querySelector(".platform_icons");
 
             // If a protondb rating has already been loaded, skip to the next wishlist item.
-            if (icon_container.querySelector(".protondb_app_icon") || row.querySelector(".platform_img.linux") !== null) {
+            if (icon_container.querySelector(".protondb_icon") || row.querySelector(".platform_img.linux") !== null) {
                 continue;
             }
 
